@@ -16,6 +16,16 @@ function nameToLabel(name) {
 	return parts.join(" ")
 }
 
+
+function requiredValidator(callback) {
+	if (this.required && !this.value) {
+		callback("This field is required");
+	}
+	else {
+		callback(true);
+	}
+}
+
 function BaseField() {
 }
 
@@ -28,13 +38,37 @@ BaseField.prototype = {
 		this.name = fieldInfo.name;
 		this.required = fieldInfo.required;
 		this.placeholder = fieldInfo.placeholder;
+
+		this.validators = [requiredValidator];
 	},
 
-	validate: function () {
-		if (this.required) {
-			return !!this.value || "This field is required";
+	addValidator: function (validator) {
+		this.validators.push(validator);
+		return this;
+	},
+
+	validate: function (callback) {
+		if (typeof(callback) !== "function") {
+			throw Error("'" + callback + "' is not a function");
 		}
-		return true;
+
+		var remainingValidations = this.validators.length;
+		var errors = [];
+
+		for (var f = 0; f < this.validators.length; f++) {
+			var validate = this.validators[f];
+
+			validate.call(this, function (error) {
+				remainingValidations--;
+				if (error !== true) {
+					errors.push(error);
+				}
+
+				if (remainingValidations === 0) {
+					callback(errors);
+				}
+			})
+		}
 	},
 
 	render: function () {

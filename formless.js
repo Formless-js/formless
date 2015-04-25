@@ -20,6 +20,8 @@ var typeMap = {
 
 function Formless(model) {
 	this.fields = {};
+	this.validators = [];
+
 
 	if (modelParser) {
 		model = modelParser.parse(model);
@@ -55,22 +57,32 @@ Formless.prototype = {
 		}
 	},
 
-	isValid: function () {
-		var isValid = true;
+	validate: function (callback) {
+		if (typeof(callback) !== "function") {
+			throw Error("'" + callback + "' is not a function");
+		}
+
+		var errors = {};
+		var remainingValidations = Object.keys(this.fields).length;
+		remainingValidations += this.validators.length;
 
 		for (var fieldName in this.fields) {
 			var field = this.fields[fieldName];
-			var result = field.validate();
 
-			if (result !== true) {
-				if (typeof result === "string") {
-					field.error = result;
-				}
-				isValid = false;
-			}
+			(function (field) {
+				field.validate(function (fieldErrors) {
+					remainingValidations--;
+					if (fieldErrors) {
+						field.errors = fieldErrors;
+						errors[field.name] = fieldErrors;
+					}
+
+					if (remainingValidations === 0) {
+						callback.call(this, errors);
+					}
+				});
+			})(field)
 		}
-
-		return isValid;
 	},
 
 	render: function () {

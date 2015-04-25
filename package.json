@@ -1,14 +1,24 @@
 {
   "name": "Formless",
   "version": "0.0.0",
-  "description": "",
+  "description": "Form handling solution for node.js",
   "main": "formless.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "grunt watch",
+    "test": "grunt test"
   },
-  "author": "",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Formless-js/formless"
+  },
+  "author": "Surdu Nicolae",
   "license": "MIT",
   "dependencies": {
     "node.extend": "^1.1.3"
+  },
+  "devDependencies": {
+    "grunt": "^0.4.5",
+    "grunt-contrib-watch": "^0.6.1",
+    "grunt-jasmine-nodejs": "^1.3.0"
   }
 }

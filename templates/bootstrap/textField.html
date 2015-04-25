@@ -1,4 +1,4 @@
-<div class="form-group{% if error %} has-error{% endif %}">
+<div class="form-group{% if errors.length > 0 %} has-error{% endif %}">
 	<label class="control-label" for="{{name}}">{{label}}</label>
 	<input type="text"
 				class="form-control"
@@ -6,8 +6,8 @@
 				name="{{name}}"
 				value="{{value}}"
 				{% if placeholder %}placeholder="{{placeholder}}"{% endif %}
-				{% if required %}required{% endif %}>
-	{% if error %}
+				> <!-- {% if required %}required{% endif %} -->
+	{% for error in errors %}
 		<span class="help-block">{{error}}</span>
-	{% endif%}
+	{% endfor%}
 </div>
