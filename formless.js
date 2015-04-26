@@ -62,7 +62,7 @@ Formless.prototype = {
 			throw Error("'" + callback + "' is not a function");
 		}
 
-		var errors = {};
+		var errors;
 		var remainingValidations = Object.keys(this.fields).length;
 		remainingValidations += this.validators.length;
 
@@ -74,6 +74,7 @@ Formless.prototype = {
 					remainingValidations--;
 					if (fieldErrors) {
 						field.errors = fieldErrors;
+						errors = errors || {};
 						errors[field.name] = fieldErrors;
 					}
 

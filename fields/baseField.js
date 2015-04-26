@@ -53,7 +53,7 @@ BaseField.prototype = {
 		}
 
 		var remainingValidations = this.validators.length;
-		var errors = [];
+		var errors;
 
 		for (var f = 0; f < this.validators.length; f++) {
 			var validate = this.validators[f];
@@ -61,6 +61,7 @@ BaseField.prototype = {
 			validate.call(this, function (error) {
 				remainingValidations--;
 				if (error !== true) {
+					errors = errors || [];
 					errors.push(error);
 				}
 
