@@ -1,3 +1,5 @@
+// jshint loopfunc: true
+
 var extend = require('node.extend');
 
 var defaultFieldInfo = {
@@ -11,9 +13,9 @@ function nameToLabel(name) {
 	// make the first letter of each word caps
 	parts = parts.map(function (part) {
 			return part.charAt(0).toUpperCase() + part.slice(1);
-	})
+	});
 
-	return parts.join(" ")
+	return parts.join(" ");
 }
 
 
@@ -30,8 +32,8 @@ function BaseField() {
 }
 
 BaseField.prototype = {
-	init: function (fieldInfo) {
-		var fieldInfo = extend(defaultFieldInfo, fieldInfo);
+	init: function (userFieldInfo) {
+		var fieldInfo = extend(defaultFieldInfo, userFieldInfo);
 
 		this.type = fieldInfo.type;
 		this.label = fieldInfo.label || nameToLabel(fieldInfo.name);
@@ -68,13 +70,13 @@ BaseField.prototype = {
 				if (remainingValidations === 0) {
 					callback(errors);
 				}
-			})
+			});
 		}
 	},
 
 	render: function () {
-		throw Error("Render not implemented for field of type '" + this.type + "'")
+		throw Error("Render not implemented for field of type '" + this.type + "'");
 	}
-}
+};
 
 module.exports = BaseField;

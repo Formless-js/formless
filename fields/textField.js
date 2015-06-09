@@ -7,7 +7,7 @@ function TextField(fieldInfo) {
 util.inherits(TextField, BaseField);
 
 TextField.prototype.render = 	function (renderer) {
-		return renderer.render("textField.html", this);
+		return renderer.render("inputField.html", this);
 };
 
 

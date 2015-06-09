@@ -6,7 +6,7 @@ describe("form", function () {
 	var form;
 
 	beforeEach(function () {
-		form = new Form(basicForm)
+		form = new Form(basicForm);
 	});
 
 	it("should initialize with basic JSON", function () {
@@ -23,5 +23,5 @@ describe("form", function () {
 			expect(err.lastName).not.toBeUndefined();
 			done();
 		});
-	})
-})
+	});
+});

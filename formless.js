@@ -1,3 +1,5 @@
+// jshint loopfunc: true
+
 var path = require("path");
 var extend = require('node.extend');
 
@@ -10,13 +12,14 @@ var defaultConfig = {
 	renderer: nj,
 	modelParser: null,
 	templatesPath: path.join(__dirname, 'templates')
-}
+};
 
 var renderer = new nj(defaultConfig.templatesPath);
 
 var typeMap = {
-	"text": require("./fields/textField")
-}
+	"text": require("./fields/textField"),
+	"hidden": require("./fields/hiddenField"),
+};
 
 function Formless(model) {
 	this.fields = {};
@@ -82,7 +85,7 @@ Formless.prototype = {
 						callback.call(this, errors);
 					}
 				});
-			})(field)
+			})(field);
 		}
 	},
 

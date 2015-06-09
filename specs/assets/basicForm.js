@@ -16,4 +16,4 @@ module.exports = [
 		type: "text",
 		required: false
 	},
-]
+];

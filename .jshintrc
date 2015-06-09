@@ -1,0 +1,17 @@
+{
+	"boss": true,
+	"strict": true,
+	"curly": true,
+	"eqeqeq": true,
+	"eqnull": true,
+	"expr": true,
+	"immed": true,
+	"noarg": true,
+	"undef": true,
+	"unused": "strict",
+	"quotmark": "double",
+	"node": true
+
+  "globals": {
+	}
+}

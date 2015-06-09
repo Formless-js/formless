@@ -1,6 +1,6 @@
 var typeMappings = {
 	"String": "text"
-}
+};
 
 function MongooseParser() {
 	this.ignoreFields = ["_id", "__v"];
@@ -21,17 +21,17 @@ MongooseParser.prototype = {
 			var mongoField = model.schema.paths[fieldName];
 
 			var field = {
-				type: typeMappings[mongoField.instance],
+				type: mongoField.options.fieldType || typeMappings[mongoField.instance],
 				name: fieldName,
 				required: mongoField.isRequired,
 				placeholder: mongoField.options.placeholder || ""
 			};
 
-			fields.push(field)
+			fields.push(field);
 		}
 
 		return fields;
 	}
-}
+};
 
-module.exports = MongooseParser
+module.exports = MongooseParser;
