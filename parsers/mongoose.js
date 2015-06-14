@@ -14,17 +14,18 @@ MongooseParser.prototype = {
 	parse: function (model) {
 		fields = [];
 		for (var fieldName in model.schema.paths) {
-			if (this.ignoreFields.indexOf(fieldName) !== -1) {
+			var mongoField = model.schema.paths[fieldName];
+ 			var fieldOptions = mongoField.options.formless || {};
+
+			if (fieldOptions.ignore || this.ignoreFields.indexOf(mongoField.path) !== -1) {
 				continue;
 			}
 
-			var mongoField = model.schema.paths[fieldName];
-
 			var field = {
-				type: mongoField.options.fieldType || typeMappings[mongoField.instance],
+				type: fieldOptions.inputType || typeMappings[mongoField.instance],
 				name: fieldName,
 				required: mongoField.isRequired,
-				placeholder: mongoField.options.placeholder || ""
+				placeholder: fieldOptions.placeholder || ""
 			};
 
 			fields.push(field);

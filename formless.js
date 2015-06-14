@@ -1,4 +1,4 @@
-// jshint loopfunc: true
+ // jshint loopfunc: true
 
 var path = require("path");
 var extend = require('node.extend');
