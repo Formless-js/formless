@@ -1,3 +1,5 @@
+// jshint jasmine: true
+
 var Form = require("../formless");
 
 var basicForm = require("./assets/basicForm");
