@@ -1,6 +1,8 @@
 // jshint loopfunc: true
 
-var extend = require('node.extend');
+"use strict";
+
+var extend = require("node.extend");
 
 var defaultFieldInfo = {
 	required: false

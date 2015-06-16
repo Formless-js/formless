@@ -1,5 +1,9 @@
+"use strict";
+
 var typeMappings = {
-	"String": "text"
+	"String": "text",
+	"Date": "date",
+	"Number": "number",
 };
 
 function MongooseParser() {
@@ -7,25 +11,27 @@ function MongooseParser() {
 }
 
 MongooseParser.prototype = {
-	addIgnoreFields: function (fieldsToIgnore) {
-		this.ignoreFields.push.apply(this.ignoreFields, fieldsToIgnore);
-	},
-
 	parse: function (model) {
-		fields = [];
+		var fields = [];
 		for (var fieldName in model.schema.paths) {
 			var mongoField = model.schema.paths[fieldName];
- 			var fieldOptions = mongoField.options.formless || {};
+ 			var formlessOptions = mongoField.options.formless || {};
 
-			if (fieldOptions.ignore || this.ignoreFields.indexOf(mongoField.path) !== -1) {
+			if (formlessOptions.ignore || this.ignoreFields.indexOf(mongoField.path) !== -1) {
 				continue;
 			}
 
+			var fieldType = formlessOptions.type || typeMappings[mongoField.instance];
+
+			if (!fieldType) {
+				throw Error("Can't parse field " + model.modelName + "." + fieldName + " of type " + mongoField.instance);
+			}
+
 			var field = {
-				type: fieldOptions.inputType || typeMappings[mongoField.instance],
+				type: fieldType,
 				name: fieldName,
 				required: mongoField.isRequired,
-				placeholder: fieldOptions.placeholder || ""
+				placeholder: formlessOptions.placeholder || ""
 			};
 
 			fields.push(field);

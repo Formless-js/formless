@@ -1,13 +1,15 @@
+"use strict";
+
 var util = require("util");
 var BaseField = require("./baseField");
 
-function HiddenField(fieldInfo) {
+function HiddenField() {
 }
 
 util.inherits(HiddenField, BaseField);
 
 HiddenField.prototype.render = 	function (renderer) {
-		return renderer.render("inputField.html", this);
+		return renderer.render("hiddenField.html", this);
 };
 
 

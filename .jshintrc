@@ -11,7 +11,4 @@
 	"unused": "strict",
 	"quotmark": "double",
 	"node": true
-
-  "globals": {
-	}
 }

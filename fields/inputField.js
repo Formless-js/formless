@@ -1,7 +1,9 @@
+"use strict";
+
 var util = require("util");
 var BaseField = require("./baseField");
 
-function TextField(fieldInfo) {
+function TextField() {
 }
 
 util.inherits(TextField, BaseField);
