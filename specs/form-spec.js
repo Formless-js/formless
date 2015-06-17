@@ -1,5 +1,7 @@
 // jshint jasmine: true
 
+"use strict";
+
 var Form = require("../formless");
 
 var basicForm = require("./assets/basicForm");

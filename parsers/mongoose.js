@@ -4,6 +4,7 @@ var typeMappings = {
 	"String": "text",
 	"Date": "date",
 	"Number": "number",
+	"Array": "select"
 };
 
 function MongooseParser() {
@@ -15,7 +16,14 @@ MongooseParser.prototype = {
 		var fields = [];
 		for (var fieldName in model.schema.paths) {
 			var mongoField = model.schema.paths[fieldName];
- 			var formlessOptions = mongoField.options.formless || {};
+ 			var formlessOptions;
+
+			if (mongoField.instance !== "Array") {
+				formlessOptions = mongoField.options.formless || {};
+			}
+			else {
+				formlessOptions = mongoField.options.type[0].formless || {};
+			}
 
 			if (formlessOptions.ignore || this.ignoreFields.indexOf(mongoField.path) !== -1) {
 				continue;

@@ -8,7 +8,6 @@
 	"immed": true,
 	"noarg": true,
 	"undef": true,
-	"unused": "strict",
-	"quotmark": "double",
+	"unused": true,
 	"node": true
 }
