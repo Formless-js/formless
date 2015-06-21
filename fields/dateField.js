@@ -12,7 +12,10 @@ function DateField() {
 util.inherits(DateField, BaseField);
 
 DateField.prototype.serialize = function (value) {
-	return moment(value).format("YYYY-MM-DD");
+	if (value) {
+		return moment(value).format("YYYY-MM-DD");
+	}
+	return null;
 };
 
 DateField.prototype.deserialize = function (value) {
