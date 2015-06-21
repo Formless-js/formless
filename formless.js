@@ -5,6 +5,8 @@
 var path = require("path");
 var extend = require("node.extend");
 
+var moment = require("moment");
+
 var nj = require("./renderers/nunjucks");
 
 var defaultConfig = {
@@ -55,8 +57,13 @@ function Formless(model, userConfig) {
 Formless.prototype = {
 	fill: function (values) {
 		for (var valueName in values) {
-			if (this.fields[valueName]) {
-				this.fields[valueName].value = values[valueName];
+			var field = this.fields[valueName];
+			if (field) {
+				var value = values[valueName];
+				if (field.type === "date") {
+					value = moment(value).format("YYYY-MM-DD");
+				}
+				field.value = value;
 			}
 		}
 	},
