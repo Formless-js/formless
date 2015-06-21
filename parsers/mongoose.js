@@ -38,7 +38,7 @@ MongooseParser.prototype = {
 			var field = {
 				type: fieldType,
 				name: fieldName,
-				required: mongoField.isRequired || false, // due to a bug in node.js's 'extend'
+				required: mongoField.isRequired,
 				placeholder: formlessOptions.placeholder || ""
 			};
 

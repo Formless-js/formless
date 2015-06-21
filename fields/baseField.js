@@ -3,6 +3,7 @@
 "use strict";
 
 var extend = require("node.extend");
+var utils = require("utils-js");
 
 var defaultFieldInfo = {
 	required: false
@@ -35,7 +36,8 @@ function BaseField() {
 
 BaseField.prototype = {
 	init: function (userFieldInfo) {
-		var fieldInfo = extend(defaultFieldInfo, userFieldInfo);
+		var fieldInfo = utils.clone(defaultFieldInfo);
+		extend(fieldInfo, userFieldInfo);
 
 		this.type = fieldInfo.type;
 		this.label = fieldInfo.label || nameToLabel(fieldInfo.name);
