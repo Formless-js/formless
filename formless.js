@@ -3,9 +3,8 @@
 "use strict";
 
 var path = require("path");
-var extend = require("node.extend");
 
-var moment = require("moment");
+var extend = require("node.extend");
 
 var nj = require("./renderers/nunjucks");
 
@@ -19,7 +18,7 @@ var defaultConfig = {
 var typeMap = {
 	"text": require("./fields/inputField"),
 	"hidden": require("./fields/hiddenField"),
-	"date": require("./fields/inputField"),
+	"date": require("./fields/dateField"),
 	"number": require("./fields/inputField"),
 };
 
@@ -56,14 +55,12 @@ function Formless(model, userConfig) {
 
 Formless.prototype = {
 	fill: function (values) {
-		for (var valueName in values) {
-			var field = this.fields[valueName];
-			if (field) {
-				var value = values[valueName];
-				if (field.type === "date") {
-					value = moment(value).format("YYYY-MM-DD");
+		for (var fieldName in this.fields) {
+			if (this.fields.hasOwnProperty(fieldName)) {
+				var field = this.fields[fieldName];
+				if (values[fieldName]) {
+					field.value = field.deserialize(values[fieldName]);
 				}
-				field.value = value;
 			}
 		}
 	},
@@ -78,22 +75,24 @@ Formless.prototype = {
 		remainingValidations += this.validators.length;
 
 		for (var fieldName in this.fields) {
-			var field = this.fields[fieldName];
+			if (this.fields.hasOwnProperty(fieldName)) {
+				var field = this.fields[fieldName];
 
-			(function (field) {
-				field.validate(function (fieldErrors) {
-					remainingValidations--;
-					if (fieldErrors) {
-						field.errors = fieldErrors;
-						errors = errors || {};
-						errors[field.name] = fieldErrors;
-					}
+				(function (field) {
+					field.validate(function (fieldErrors) {
+						remainingValidations--;
+						if (fieldErrors) {
+							field.errors = fieldErrors;
+							errors = errors || {};
+							errors[field.name] = fieldErrors;
+						}
 
-					if (remainingValidations === 0) {
-						callback.call(this, errors);
-					}
-				});
-			})(field);
+						if (remainingValidations === 0) {
+							callback.call(this, errors);
+						}
+					});
+				})(field);
+			}
 		}
 	},
 
@@ -105,8 +104,10 @@ Formless.prototype = {
 		var output = "";
 
 		for (var fieldName in this.fields) {
-			var field = this.fields[fieldName];
-			output += field.render(this.renderer);
+			if (this.fields.hasOwnProperty(fieldName)) {
+				var field = this.fields[fieldName];
+				output += field.render(this.renderer);
+			}
 		}
 
 		return output;

@@ -4,13 +4,9 @@ var util = require("util");
 var BaseField = require("./baseField");
 
 function HiddenField() {
+	this.template = "hiddenField.html";
 }
 
 util.inherits(HiddenField, BaseField);
-
-HiddenField.prototype.render = 	function (renderer) {
-		return renderer.render("hiddenField.html", this);
-};
-
 
 module.exports = HiddenField;

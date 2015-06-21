@@ -48,6 +48,14 @@ BaseField.prototype = {
 		this.validators = [requiredValidator];
 	},
 
+	serialize: function (value) {
+		return value;
+	},
+
+	deserialize: function (value) {
+		return value;
+	},
+
 	addValidator: function (validator) {
 		this.validators.push(validator);
 		return this;
@@ -78,8 +86,15 @@ BaseField.prototype = {
 		}
 	},
 
-	render: function () {
-		throw Error("Render not implemented for field of type '" + this.type + "'");
+	render: function (renderer) {
+		if (!this.template) {
+			throw Error("Template property not defined for field type" + this.type);
+		}
+
+		var context = utils.clone(this);
+		context.value = this.serialize(context.value);
+
+		return renderer.render(this.template, context);
 	}
 };
 
