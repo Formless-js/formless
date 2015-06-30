@@ -46,6 +46,9 @@ BaseField.prototype = {
 		this.placeholder = fieldInfo.placeholder;
 
 		this.validators = [requiredValidator];
+		if (this.specificValidators) {
+			this.validators.push.apply(this.validators, this.specificValidators);
+		}
 	},
 
 	serialize: function (value) {

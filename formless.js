@@ -1,6 +1,4 @@
- // jshint loopfunc: true
-
-"use strict";
+ "use strict";
 
 var path = require("path");
 
@@ -20,6 +18,7 @@ var typeMap = {
 	"hidden": require("./fields/hiddenField"),
 	"date": require("./fields/dateField"),
 	"number": require("./fields/inputField"),
+	"email": require("./fields/emailField"),
 };
 
 function Formless(model, userConfig) {
