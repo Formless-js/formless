@@ -3,6 +3,7 @@
 var path = require("path");
 
 var extend = require("node.extend");
+var clone = require("clone");
 
 var nj = require("./renderers/nunjucks");
 
@@ -25,7 +26,8 @@ function Formless(model, userConfig) {
 	this.fields = {};
 	this.validators = [];
 
-	var config = extend(defaultConfig, userConfig);
+	var config = extend(clone(defaultConfig), userConfig);
+  console.log(defaultConfig);
 
 	if (config.templatesPath === defaultConfig.templatesPath && config.useBootstrap) {
 		config.templatesPath = path.join(__dirname, "templates/bootstrap");

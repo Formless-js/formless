@@ -3,7 +3,7 @@
 "use strict";
 
 var extend = require("node.extend");
-var utils = require("utils-js");
+var clone = require("clone");
 
 var defaultFieldInfo = {
 	required: false
@@ -36,7 +36,7 @@ function BaseField() {
 
 BaseField.prototype = {
 	init: function (userFieldInfo) {
-		var fieldInfo = utils.clone(defaultFieldInfo);
+		var fieldInfo = clone(defaultFieldInfo);
 		extend(fieldInfo, userFieldInfo);
 
 		this.type = fieldInfo.type;
@@ -94,7 +94,7 @@ BaseField.prototype = {
 			throw Error("Template property not defined for field type" + this.type);
 		}
 
-		var context = utils.clone(this);
+		var context = clone(this);
 		context.value = this.serialize(context.value);
 
 		return renderer.render(this.template, context);
