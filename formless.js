@@ -1,4 +1,4 @@
- "use strict";
+"use strict";
 
 var path = require("path");
 
@@ -27,10 +27,13 @@ function Formless(model, userConfig) {
 	this.validators = [];
 
 	var config = extend(clone(defaultConfig), userConfig);
-  console.log(defaultConfig);
 
 	if (config.templatesPath === defaultConfig.templatesPath && config.useBootstrap) {
 		config.templatesPath = path.join(__dirname, "templates/bootstrap");
+	}
+
+	if (config.typeMap) {
+		typeMap = extend(typeMap, config.typeMap);
 	}
 
 	this.modelParser = config.modelParser;
@@ -49,7 +52,7 @@ function Formless(model, userConfig) {
 		}
 
 		var formField = new FieldClass();
-		formField.init(modelField);
+		formField.init(modelField, this.renderer);
 		this.fields[modelField.name] = formField;
 	}
 }
@@ -107,7 +110,7 @@ Formless.prototype = {
 		for (var fieldName in this.fields) {
 			if (this.fields.hasOwnProperty(fieldName)) {
 				var field = this.fields[fieldName];
-				output += field.render(this.renderer);
+				output += field.render();
 			}
 		}
 

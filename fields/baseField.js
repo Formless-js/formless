@@ -35,7 +35,7 @@ function BaseField() {
 }
 
 BaseField.prototype = {
-	init: function (userFieldInfo) {
+	init: function (userFieldInfo, renderer) {
 		var fieldInfo = clone(defaultFieldInfo);
 		extend(fieldInfo, userFieldInfo);
 
@@ -44,6 +44,7 @@ BaseField.prototype = {
 		this.name = fieldInfo.name;
 		this.required = fieldInfo.required;
 		this.placeholder = fieldInfo.placeholder;
+		this.renderer = renderer;
 
 		this.validators = [requiredValidator];
 		if (this.specificValidators) {
@@ -89,7 +90,7 @@ BaseField.prototype = {
 		}
 	},
 
-	render: function (renderer) {
+	render: function () {
 		if (!this.template) {
 			throw Error("Template property not defined for field type" + this.type);
 		}
@@ -97,7 +98,7 @@ BaseField.prototype = {
 		var context = clone(this);
 		context.value = this.serialize(context.value);
 
-		return renderer.render(this.template, context);
+		return this.renderer.render(this.template, context);
 	}
 };
 
