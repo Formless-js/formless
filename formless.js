@@ -20,6 +20,7 @@ var typeMap = {
 	"date": require("./fields/dateField"),
 	"number": require("./fields/inputField"),
 	"email": require("./fields/emailField"),
+	"password": require("./fields/passwordField")
 };
 
 function Formless(model, userConfig) {
