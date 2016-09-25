@@ -1,0 +1,17 @@
+<div class="form-group{% if errors.length > 0 %} has-error{% endif %}">
+	<label class="control-label" for="{{name}}">{{label}}</label>
+	<select class="form-control"
+	        id="{{name}}"
+	        name="{{name}}">
+		{% if placeholder %}
+			<option value="">{{placeholder}}</option>
+		{% endif %}
+		{% for value, text in options %}
+			<option value="{{value}}">{{text}}</option>
+		{% endfor %}
+	</select>
+
+	{% for error in errors %}
+		<span class="help-block">{{error}}</span>
+	{% endfor%}
+</div>
