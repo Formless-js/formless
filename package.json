@@ -1,6 +1,6 @@
 {
   "name": "formless",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "description": "Form handling solution for node.js",
   "main": "formless.js",
   "scripts": {

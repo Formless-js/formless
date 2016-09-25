@@ -5,7 +5,12 @@ var BaseField = require("./baseField");
 var validator = require("email-validator");
 
 function emailValidator(callback) {
-	callback(validator.validate(this.value || "") || "The email address is invalid");
+	if (!this.value){
+		callback(true);
+		return;
+	}
+
+	callback(validator.validate(this.value) || "The email address is invalid");
 }
 
 function EmailField() {
