@@ -39,6 +39,8 @@ BaseField.prototype = {
 		var fieldInfo = clone(defaultFieldInfo);
 		extend(fieldInfo, userFieldInfo);
 
+		this.fieldInfo = fieldInfo;
+
 		this.type = fieldInfo.type;
 		this.label = fieldInfo.label || nameToLabel(fieldInfo.name);
 		this.name = fieldInfo.name;

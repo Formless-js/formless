@@ -30,19 +30,17 @@ MongooseParser.prototype = {
 					continue;
 				}
 
-				var fieldType = formlessOptions.type || typeMappings[mongoField.instance];
+				// inherit all options from the `formless` property
+				var field = JSON.parse(JSON.stringify(formlessOptions));
 
-				if (!fieldType) {
+				field.type = formlessOptions.type || typeMappings[mongoField.instance];
+
+				if (!field.type) {
 					throw Error("Can't parse field " + model.modelName + "." + fieldName + " of type " + mongoField.instance);
 				}
 
-				var field = {
-					type: fieldType,
-					name: fieldName,
-					label: formlessOptions.label || undefined,
-					required: mongoField.isRequired,
-					placeholder: formlessOptions.placeholder || ""
-				};
+				field.name = fieldName;
+				field.required = mongoField.isRequired;
 
 				fields.push(field);
 			}
