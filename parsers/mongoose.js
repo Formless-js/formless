@@ -19,15 +19,15 @@ MongooseParser.prototype = {
 				var mongoField = model.schema.paths[fieldName];
 	 			var formlessOptions;
 
+				if (mongoField.options.formless === undefined || this.ignoreFields.indexOf(mongoField.path) !== -1) {
+					continue;
+				}
+
 				if (mongoField.instance !== "Array") {
 					formlessOptions = mongoField.options.formless || {};
 				}
 				else {
 					formlessOptions = mongoField.options.type[0].formless || {};
-				}
-
-				if (formlessOptions.ignore || this.ignoreFields.indexOf(mongoField.path) !== -1) {
-					continue;
 				}
 
 				// inherit all options from the `formless` property
