@@ -17,17 +17,18 @@ MongooseParser.prototype = {
 		for (var fieldName in model.schema.paths) {
 			if (model.schema.paths.hasOwnProperty(fieldName)) {
 				var mongoField = model.schema.paths[fieldName];
-	 			var formlessOptions;
-
-				if (mongoField.options.formless === undefined || this.ignoreFields.indexOf(mongoField.path) !== -1) {
-					continue;
-				}
+				var formlessOptions;
 
 				if (mongoField.instance !== "Array") {
-					formlessOptions = mongoField.options.formless || {};
+					formlessOptions = mongoField.options.formless;
 				}
 				else {
-					formlessOptions = mongoField.options.type[0].formless || {};
+					formlessOptions = mongoField.options.type[0].formless;
+				}
+
+				// if we don't find the option in the field itself or we ex
+				if (formlessOptions === undefined || this.ignoreFields.indexOf(mongoField.path) !== -1) {
+					continue;
 				}
 
 				// inherit all options from the `formless` property
