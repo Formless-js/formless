@@ -6,8 +6,10 @@
 		{% if placeholder %}
 			<option value="">{{placeholder}}</option>
 		{% endif %}
-		{% for value, text in options %}
-			<option value="{{value}}">{{text}}</option>
+		{% for option in fieldInfo.options %}
+			<option value="{{option.value}}" {% if option.value == value %}selected="selected"{% endif %}>
+				{{option.text}}
+			</option>
 		{% endfor %}
 	</select>
 
