@@ -23,7 +23,7 @@ MongooseParser.prototype = {
 					formlessOptions = mongoField.options.formless;
 				}
 				else {
-					formlessOptions = mongoField.options.type[0].formless;
+					formlessOptions = mongoField.options.formless || (mongoField.options.type[0] && mongoField.options.type[0].formless);
 				}
 
 				// if we don't find the option in the field itself or we ex
